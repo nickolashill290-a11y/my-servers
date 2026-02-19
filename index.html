@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<!-- ↑ Diz ao navegador que é um arquivo HTML5 -->
+
+<html lang="pt-BR">
+<!-- ↑ Define o idioma como Português do Brasil -->
+
+<head>
+<!-- ↑ CABEÇA do site (configurações) -->
+
+    <meta charset="UTF-8">
+    <!-- ↑ Permite usar acentos (á, ã, ç, é) -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ↑ Faz o site funcionar bem em celular -->
+    
+    <title>Meus Servidores Discord</title>
+    <!-- ↑ Nome que aparece na ABA do navegador -->
+    
+    <style>
+    <!-- ↑ AQUI COMEÇAM OS ESTILOS (aparência do site) -->
+    
+        * {
+        /* ↑ Aplica a TODOS os elementos */
+            margin: 0;
+            /* ↑ Remove margem padrão */
+            padding: 0;
+            /* ↑ Remove espaçamento padrão */
+            box-sizing: border-box;
+            /* ↑ Facilita cálculo de tamanhos */
+        }
+
+        body {
+        /* ↑ Estilo do CORPO da página */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* ↑ Tipo de letra */
+            background: linear-gradient(135deg, #5865F2 0%, #3C45A5 100%);
+            /* ↑ Fundo AZUL do Discord com degradê */
+            min-height: 100vh;
+            /* ↑ Altura mínima = tela inteira */
+            padding: 20px;
+            /* ↑ Espaço interno de 20px */
+        }
+
+        .container {
+        /* ↑ Caixa que centraliza tudo */
+            max-width: 1200px;
+            /* ↑ Largura máxima */
+            margin: 0 auto;
+            /* ↑ Centraliza horizontalmente */
+        }
+
+        header {
+        /* ↑ CABEÇALHO do site */
+            text-align: center;
+            /* ↑ Texto centralizado */
+            color: white;
+            /* ↑ Texto branco */
+            padding: 40px 20px;
+            /* ↑ Espaçamento interno */
+        }
+
+        header h1 {
+        /* ↑ Título principal */
+            font-size: 3em;
+            /* ↑ Tamanho grande (3x) */
+            margin-bottom: 10px;
+            /* ↑ Espaço abaixo */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            /* ↑ Sombra no texto */
+        }
+
+        header p {
+        /* ↑ Subtítulo */
+            font-size: 1.2em;
+            /* ↑ 1.2x o tamanho normal */
+            opacity: 0.9;
+            /* ↑ Levemente transparente */
+        }
+
+        .servers-grid {
+        /* ↑ Grade que organiza os cards */
+            display: grid;
+            /* ↑ Sistema de grade */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            /* ↑ Cards lado a lado (automático) */
+            gap: 30px;
+            /* ↑ Espaço entre cards */
+            padding: 20px 0;
+            /* ↑ Espaço em cima e embaixo */
+        }
+
+        .server-card {
+        /* ↑ CARD de cada servidor Discord */
+            background: #2C2F33;
+            /* ↑ Fundo cinza escuro (cor do Discord) */
+            border-radius: 15px;
+            /* ↑ Cantos arredondados */
+            padding: 30px;
+            /* ↑ Espaço interno */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            /* ↑ Sombra */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* ↑ Animação suave */
+            border: 2px solid #40444B;
+            /* ↑ Borda cinza */
+        }
+
+        .server-card:hover {
+        /* ↑ Quando PASSA O MOUSE no card */
+            transform: translateY(-10px);
+            /* ↑ Sobe 10px */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            /* ↑ Sombra maior */
+            border-color: #5865F2;
+            /* ↑ Borda fica azul do Discord */
+        }
+
+        .server-icon {
+        /* ↑ Ícone do servidor (imagem circular) */
+            width: 80px;
+            /* ↑ Largura */
+            height: 80px;
+            /* ↑ Altura (quadrado) */
+            background: linear-gradient(135deg, #5865F2 0%, #3C45A5 100%);
+            /* ↑ Fundo azul degradê */
+            border-radius: 50%;
+            /* ↑ Totalmente redondo (círculo) */
+            display: flex;
+            /* ↑ Usa flexbox */
+            align-items: center;
+            /* ↑ Centraliza verticalmente */
+            justify-content: center;
+            /* ↑ Centraliza horizontalmente */
+            font-size: 35px;
+            /* ↑ Tamanho do emoji */
+            margin-bottom: 20px;
+            /* ↑ Espaço abaixo */
+            border: 3px solid #5865F2;
+            /* ↑ Borda azul */
+        }
+
+        .server-card h2 {
+        /* ↑ Nome do servidor */
+            color: white;
+            /* ↑ Texto branco */
+            margin-bottom: 10px;
+            /* ↑ Espaço abaixo */
+            font-size: 1.8em;
+            /* ↑ Tamanho grande */
+        }
+
+        .server-stats {
+        /* ↑ Estatísticas (membros online) */
+            display: flex;
+            /* ↑ Lado a lado */
+            gap: 15px;
+            /* ↑ Espaço entre os itens */
+            margin-bottom: 15px;
+            /* ↑ Espaço abaixo */
+        }
+
+        .stat {
+        /* ↑ Cada estatística */
+            display: flex;
+            /* ↑ Ícone + texto lado a lado */
+            align-items: center;
+            /* ↑ Alinhado verticalmente */
+            gap: 5px;
+            /* ↑ Espaço entre ícone e número */
+            color: #B9BBBE;
+            /* ↑ Cor cinza claro */
+            font-size: 0.95em;
+            /* ↑ Tamanho da fonte */
+        }
+
+        .stat-online {
+        /* ↑ Indicador de membros online */
+            color: #3BA55D;
+            /* ↑ Verde (online) */
+        }
+
+        .stat-total {
+        /* ↑ Total de membros */
+            color: #B9BBBE;
+            /* ↑ Cinza */
+        }
+
+        .server-info {
+        /* ↑ Descrição do servidor */
+            color: #B9BBBE;
+            /* ↑ Texto cinza claro */
+            line-height: 1.6;
+            /* ↑ Espaçamento entre linhas */
+            margin-bottom: 20px;
+            /* ↑ Espaço abaixo */
+            min-height: 60px;
+            /* ↑ Altura mínima (deixa cards alinhados) */
+        }
+
+        .server-tags {
+        /* ↑ Tags/categorias do servidor */
+            display: flex;
+            /* ↑ Tags lado a lado */
+            flex-wrap: wrap;
+            /* ↑ Quebra linha se necessário */
+            gap: 8px;
+            /* ↑ Espaço entre tags */
+            margin-bottom: 20px;
+            /* ↑ Espaço abaixo */
+        }
+
+        .tag {
+        /* ↑ Cada tag */
+            background: #40444B;
+            /* ↑ Fundo cinza escuro */
+            color: #B9BBBE;
+            /* ↑ Texto cinza claro */
+            padding: 5px 12px;
+            /* ↑ Espaço interno */
+            border-radius: 12px;
+            /* ↑ Cantos arredondados */
+            font-size: 0.85em;
+            /* ↑ Fonte pequena */
+            font-weight: 500;
+            /* ↑ Meio negrito */
+        }
+
+        .server-actions {
+        /* ↑ Área dos botões */
+            display: flex;
+            /* ↑ Botões lado a lado */
+            gap: 10px;
+            /* ↑ Espaço entre botões */
+            flex-wrap: wrap;
+            /* ↑ Quebra linha se necessário */
+        }
+
+        .btn {
+        /* ↑ Estilo BASE de todos os botões */
+            display: inline-block;
+            /* ↑ Comporta-se como botão */
+            padding: 12px 25px;
+            /* ↑ Espaço interno */
+            border-radius: 8px;
+            /* ↑ Cantos levemente arredondados */
+            text-decoration: none;
+            /* ↑ Remove sublinhado */
+            font-weight: 600;
+            /* ↑ Negrito */
+            transition: all 0.3s ease;
+            /* ↑ Animação suave */
+            cursor: pointer;
+            /* ↑ Cursor vira mãozinha */
+            border: none;
+            /* ↑ Sem borda */
+            font-size: 0.95em;
+            /* ↑ Tamanho da fonte */
+            text-align: center;
+            /* ↑ Texto centralizado */
+        }
+
+        .btn:hover {
+        /* ↑ Quando PASSA O MOUSE no botão */
+            transform: translateY(-2px);
+            /* ↑ Sobe 2px */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            /* ↑ Adiciona sombra */
+        }
+
+        .btn-discord {
+        /* ↑ Botão azul do Discord (Entrar) */
+            background: #5865F2;
+            /* ↑ Azul Discord */
+            color: white;
+            /* ↑ Texto branco */
+            flex: 1;
+            /* ↑ Ocupa espaço disponível */
+        }
+
+        .btn-discord:hover {
+        /* ↑ Ao passar o mouse */
+            background: #4752C4;
+            /* ↑ Azul mais escuro */
+        }
+
+        .btn-copy {
+        /* ↑ Botão cinza (Copiar Link) */
+            background: #40444B;
+            /* ↑ Cinza escuro */
+            color: #B9BBBE;
+            /* ↑ Texto cinza claro */
+        }
+
+        .btn-copy:hover {
+        /* ↑ Ao passar o mouse */
+            background: #4E5258;
+            /* ↑ Cinza um pouco mais claro */
+        }
+
+        .notification {
+        /* ↑ Notificação que aparece ao copiar link */
+            position: fixed;
+            /* ↑ Fica fixo na tela */
+            top: 20px;
+            /* ↑ 20px do topo */
+            right: 20px;
+            /* ↑ 20px da direita */
+            background: #3BA55D;
+            /* ↑ Verde (sucesso) */
+            color: white;
+            /* ↑ Texto branco */
+            padding: 15px 25px;
+            /* ↑ Espaço interno */
+            border-radius: 8px;
+            /* ↑ Cantos arredondados */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            /* ↑ Sombra */
+            display: none;
+            /* ↑ ESCONDIDA por padrão */
+            z-index: 1000;
+            /* ↑ Aparece na frente de tudo */
+            animation: slideIn 0.3s ease;
+            /* ↑ Animação de entrada */
+            font-weight: 600;
+            /* ↑ Negrito */
+        }
+
+        .notification.show {
+        /* ↑ Quando adicionar classe "show" */
+            display: block;
+            /* ↑ Fica VISÍVEL */
+        }
+
+        @keyframes slideIn {
+        /* ↑ Animação de deslizar */
+            from {
+            /* ↑ Começo */
+                transform: translateX(400px);
+                /* ↑ 400px à direita (fora da tela) */
+                opacity: 0;
+                /* ↑ Invisível */
+            }
+            to {
+            /* ↑ Fim */
+                transform: translateX(0);
+                /* ↑ Posição normal */
+                opacity: 1;
+                /* ↑ Totalmente visível */
+            }
+        }
+
+        footer {
+        /* ↑ Rodapé do site */
+            text-align: center;
+            /* ↑ Texto centralizado */
+            color: white;
+            /* ↑ Texto branco */
+            padding: 40px 20px;
+            /* ↑ Espaçamento */
+            margin-top: 40px;
+            /* ↑ Espaço acima */
+            border-top: 1px solid rgba(255,255,255,0.1);
+            /* ↑ Linha fina em cima */
+        }
+
+        footer a {
+        /* ↑ Links no rodapé */
+            color: #5865F2;
+            /* ↑ Azul Discord */
+            text-decoration: none;
+            /* ↑ Sem sublinhado */
+            font-weight: 600;
+            /* ↑ Negrito */
+        }
+
+        footer a:hover {
+        /* ↑ Ao passar o mouse no link */
+            text-decoration: underline;
+            /* ↑ Adiciona sublinhado */
+        }
+
+        @media (max-width: 768px) {
+        /* ↑ VERSÃO MOBILE (celular) */
+        
+            header h1 {
+                font-size: 2em;
+                /* ↑ Título menor */
+            }
+
+            .servers-grid {
+                grid-template-columns: 1fr;
+                /* ↑ 1 card por linha */
+            }
+
+            .server-actions {
+                flex-direction: column;
+                /* ↑ Botões um embaixo do outro */
+            }
+
+            .btn {
+                width: 100%;
+                /* ↑ Botões largura total */
+            }
+        }
+        
+    </style>
+    <!-- ↑ FIM DOS ESTILOS -->
+    
+</head>
+
+<body>
+<!-- ↑ CORPO do site (conteúdo visível) -->
+
+    <div class="container">
+    <!-- ↑ Container principal -->
+    
+        <div id="notification" class="notification">
+        <!-- ↑ Notificação (escondida) -->
+            ✓ Link copiado com sucesso!
+            <!-- ↑ Texto da notificação -->
+        </div>
+
+        <header>
+        <!-- ↑ CABEÇALHO -->
+            <h1>💬 Meus Servidores Discord</h1>
+            <!-- ↑ Título principal -->
+            <p>Entre nos melhores servidores da comunidade!</p>
+            <!-- ↑ Subtítulo -->
+        </header>
+
+        <div class="servers-grid">
+        <!-- ↑ Grade com os cards -->
+        
+            <!-- ============================================ -->
+            <!-- SERVIDOR 1 -->
+            <!-- ============================================ -->
+            <div class="server-card">
+            <!-- ↑ Card do primeiro servidor -->
+            
+                <div class="server-icon">🎮</div>
+                <!-- ↑ Ícone do servidor (emoji) -->
+                <!-- ↑ PODE TROCAR por outro emoji -->
+                
+                <h2>hazy system</h2>
+                <!-- ↑ Nome do servidor (TROQUE AQUI) -->
+                
+                <div class="server-stats">
+                <!-- ↑ Estatísticas -->
+                
+                    <div class="stat stat-online">
+                        <span>●</span>
+                        <!-- ↑ Bolinha verde -->
+                        <span>1.2K online</span>
+                        <!-- ↑ Membros online (TROQUE AQUI) -->
+                    </div>
+                    
+                    <div class="stat stat-total">
+                        <span>👥</span>
+                        <!-- ↑ Emoji de pessoas -->
+                        <span>2.3K membros</span>
+                        <!-- ↑ Total de membros (TROQUE AQUI) -->
+                    </div>
+                    
+                </div>
+                
+                <div class="server-info">
+                <!-- ↑ Descrição -->
+                    Comunidade focada em discord, eventos semanais, torneios e muito mais! Venha jogar com a gente!
+                    <!-- ↑ Descrição do servidor (TROQUE AQUI) -->
+                </div>
+                
+                <div class="server-tags">
+                <!-- ↑ Tags/categorias -->
+                    <span class="tag">Gaming</span>
+                    <!-- ↑ TROQUE as tags pelo seu servidor -->
+                    <span class="tag">Comunidade</span>
+                    <span class="tag">Torneios</span>
+                </div>
+                
+                <div class="server-actions">
+                <!-- ↑ Botões -->
+                
+                    <a href="https://discord.gg/SEUCONVITE" class="btn btn-discord" target="_blank">
+                    <!-- ↑ Botão azul para entrar -->
+                    <!-- ↑ TROQUE pelo link do SEU servidor -->
+                    <!-- ↑ target="_blank" = abre em nova aba -->
+                        Entrar no Servidor
+                    </a>
+                    
+                    <button class="btn btn-copy" onclick="copiarLink('https://discord.gg/SEUCONVITE')">
+                    <!-- ↑ Botão para copiar link -->
+                    <!-- ↑ TROQUE pelo link do SEU servidor -->
+                        📋 Copiar Link
+                    </button>
+                    
+                </div>
+            </div>
+            <!-- ↑ FIM DO CARD 1 -->
+
+            <!-- ============================================ -->
+            <!-- SERVIDOR 2 -->
+            <!-- ============================================ -->
+
+            <!-- ↑ FIM DO CARD 1 -->
+
+            <!-- ============================================ -->
+            <!-- SERVIDOR 3 -->
+            <!-- ============================================ -->
+            <div class="server-card">
+            
+                <div class="server-icon">💻</div>
+                <!-- ↑ Ícone de programação -->
+                
+                <h2>maçã hub</h2>
+                <!-- ↑ Nome (TROQUE) -->
+                
+                <div class="server-stats">
+                    <div class="stat stat-online">
+                        <span>●</span>
+                        <span>10 online</span>
+                        <!-- ↑ TROQUE -->
+                    </div>
+                    <div class="stat stat-total">
+                        <span>👥</span>
+                        <span>20 membros</span>
+                        <!-- ↑ TROQUE -->
+                    </div>
+                </div>
+                
+                <div class="server-info">
+                    Comunidade brasileira de script Tire dúvidas, compartilhe projetos e aprenda com outros devs.
+                    <!-- ↑ TROQUE -->
+                </div>
+                
+                <div class="server-tags">
+                    <span class="tag">Programação</span>
+                    <!-- ↑ TROQUE -->
+                    <span class="tag">Tech</span>
+                    <span class="tag">Aprendizado</span>
+                </div>
+                
+                <div class="server-actions">
+                    <a href="https://discord.gg/SEUCONVITE3" class="btn btn-discord" target="_blank">
+                    <!-- ↑ TROQUE -->
+                        Entrar no Servidor
+                    </a>
+                    <button class="btn btn-copy" onclick="copiarLink('https://discord.gg/SEUCONVITE3')">
+                    <!-- ↑ TROQUE -->
+                        📋 Copiar Link
+                    </button>
+                </div>
+            </div>
+            <!-- ↑ FIM DO CARD 3 -->
+            
+        </div>
+        <!-- ↑ FIM DA GRADE -->
+
+        <footer>
+        <!-- ↑ RODAPÉ -->
+            <p>© 2024 Meus Servidores Discord</p>
+            <p>
+                Feito com 💜 | 
+                <a href="https://discord.com" target="_blank">Discord</a>
+                <!-- ↑ TROQUE pelos seus links -->
+            </p>
+        </footer>
+        
+    </div>
+    <!-- ↑ FIM DO CONTAINER -->
+
+    <script>
+    <!-- ↑ JAVASCRIPT (funções) -->
+    
+        function copiarLink(link) {
+        /* ↑ FUNÇÃO que copia o link do convite */
+        
+            const tempInput = document.createElement('input');
+            /* ↑ Cria campo invisível */
+            
+            tempInput.value = link;
+            /* ↑ Coloca o link dentro */
+            
+            document.body.appendChild(tempInput);
+            /* ↑ Adiciona na página */
+            
+            tempInput.select();
+            /* ↑ Seleciona o texto */
+            
+            document.execCommand('copy');
+            /* ↑ COPIA */
+            
+            document.body.removeChild(tempInput);
+            /* ↑ Remove o campo */
+            
+            mostrarNotificacao('✓ Link copiado com sucesso!');
+            /* ↑ Mostra notificação verde */
+        }
+
+        function mostrarNotificacao(mensagem) {
+        /* ↑ FUNÇÃO que mostra a notificação */
+        
+            const notification = document.getElementById('notification');
+            /* ↑ Encontra a notificação */
+            
+            notification.textContent = mensagem;
+            /* ↑ Troca o texto */
+            
+            notification.classList.add('show');
+            /* ↑ Adiciona classe "show" (aparece) */
+            
+            setTimeout(() => {
+            /* ↑ Espera 3 segundos */
+            
+                notification.classList.remove('show');
+                /* ↑ Remove classe "show" (desaparece) */
+                
+            }, 3000);
+            /* ↑ 3000 = 3 segundos */
+        }
+        
+    </script>
+    <!-- ↑ FIM DO JAVASCRIPT -->
+    
+</body>
+</html>
+<!-- ↑ FIM DO ARQUIVO -->
