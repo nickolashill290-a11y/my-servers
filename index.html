@@ -1,626 +1,146 @@
 <!DOCTYPE html>
-<!-- ↑ Diz ao navegador que é um arquivo HTML5 -->
-
-<html lang="pt-BR">
-<!-- ↑ Define o idioma como Português do Brasil -->
-
+<html lang="pt-br">
 <head>
-<!-- ↑ CABEÇA do site (configurações) -->
+<meta charset="UTF-8">
+<title>servers</title>
+<style>
 
-    <meta charset="UTF-8">
-    <!-- ↑ Permite usar acentos (á, ã, ç, é) -->
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- ↑ Faz o site funcionar bem em celular -->
-    
-    <title>Meus Servidores Discord</title>
-    <!-- ↑ Nome que aparece na ABA do navegador -->
-    
-    <style>
-    <!-- ↑ AQUI COMEÇAM OS ESTILOS (aparência do site) -->
-    
-        * {
-        /* ↑ Aplica a TODOS os elementos */
-            margin: 0;
-            /* ↑ Remove margem padrão */
-            padding: 0;
-            /* ↑ Remove espaçamento padrão */
-            box-sizing: border-box;
-            /* ↑ Facilita cálculo de tamanhos */
-        }
+body {
+  background: #0f0f1a;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+}
 
-        body {
-        /* ↑ Estilo do CORPO da página */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* ↑ Tipo de letra */
-            background: linear-gradient(135deg, #5865F2 0%, #3C45A5 100%);
-            /* ↑ Fundo AZUL do Discord com degradê */
-            min-height: 100vh;
-            /* ↑ Altura mínima = tela inteira */
-            padding: 20px;
-            /* ↑ Espaço interno de 20px */
-        }
+/* PERFIS */
+.perfis {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
 
-        .container {
-        /* ↑ Caixa que centraliza tudo */
-            max-width: 1200px;
-            /* ↑ Largura máxima */
-            margin: 0 auto;
-            /* ↑ Centraliza horizontalmente */
-        }
+.perfil img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid purple;
 
-        header {
-        /* ↑ CABEÇALHO do site */
-            text-align: center;
-            /* ↑ Texto centralizado */
-            color: white;
-            /* ↑ Texto branco */
-            padding: 40px 20px;
-            /* ↑ Espaçamento interno */
-        }
+  /* 🔒 proteção */
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
 
-        header h1 {
-        /* ↑ Título principal */
-            font-size: 3em;
-            /* ↑ Tamanho grande (3x) */
-            margin-bottom: 10px;
-            /* ↑ Espaço abaixo */
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            /* ↑ Sombra no texto */
-        }
+.perfil h2 {
+  font-size: 16px;
+}
 
-        header p {
-        /* ↑ Subtítulo */
-            font-size: 1.2em;
-            /* ↑ 1.2x o tamanho normal */
-            opacity: 0.9;
-            /* ↑ Levemente transparente */
-        }
+/* SERVIDORES */
+.servidor {
+  background: #1a1a2e;
+  padding: 15px;
+  margin: 20px auto;
+  width: 250px;
+  border-radius: 10px;
+}
 
-        .servers-grid {
-        /* ↑ Grade que organiza os cards */
-            display: grid;
-            /* ↑ Sistema de grade */
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            /* ↑ Cards lado a lado (automático) */
-            gap: 30px;
-            /* ↑ Espaço entre cards */
-            padding: 20px 0;
-            /* ↑ Espaço em cima e embaixo */
-        }
+.servidor img {
+  width: 60px;
+  border-radius: 10px;
 
-        .server-card {
-        /* ↑ CARD de cada servidor Discord */
-            background: #2C2F33;
-            /* ↑ Fundo cinza escuro (cor do Discord) */
-            border-radius: 15px;
-            /* ↑ Cantos arredondados */
-            padding: 30px;
-            /* ↑ Espaço interno */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            /* ↑ Sombra */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            /* ↑ Animação suave */
-            border: 2px solid #40444B;
-            /* ↑ Borda cinza */
-        }
+  /* 🔒 proteção */
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
 
-        .server-card:hover {
-        /* ↑ Quando PASSA O MOUSE no card */
-            transform: translateY(-10px);
-            /* ↑ Sobe 10px */
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            /* ↑ Sombra maior */
-            border-color: #5865F2;
-            /* ↑ Borda fica azul do Discord */
-        }
+button {
+  margin: 5px;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-        .server-icon {
-        /* ↑ Ícone do servidor (imagem circular) */
-            width: 80px;
-            /* ↑ Largura */
-            height: 80px;
-            /* ↑ Altura (quadrado) */
-            background: linear-gradient(135deg, #5865F2 0%, #3C45A5 100%);
-            /* ↑ Fundo azul degradê */
-            border-radius: 50%;
-            /* ↑ Totalmente redondo (círculo) */
-            display: flex;
-            /* ↑ Usa flexbox */
-            align-items: center;
-            /* ↑ Centraliza verticalmente */
-            justify-content: center;
-            /* ↑ Centraliza horizontalmente */
-            font-size: 35px;
-            /* ↑ Tamanho do emoji */
-            margin-bottom: 20px;
-            /* ↑ Espaço abaixo */
-            border: 3px solid #5865F2;
-            /* ↑ Borda azul */
-        }
+.entrar {
+  background: purple;
+  color: white;
+}
 
-        .server-card h2 {
-        /* ↑ Nome do servidor */
-            color: white;
-            /* ↑ Texto branco */
-            margin-bottom: 10px;
-            /* ↑ Espaço abaixo */
-            font-size: 1.8em;
-            /* ↑ Tamanho grande */
-        }
-
-        .server-stats {
-        /* ↑ Estatísticas (membros online) */
-            display: flex;
-            /* ↑ Lado a lado */
-            gap: 15px;
-            /* ↑ Espaço entre os itens */
-            margin-bottom: 15px;
-            /* ↑ Espaço abaixo */
-        }
-
-        .stat {
-        /* ↑ Cada estatística */
-            display: flex;
-            /* ↑ Ícone + texto lado a lado */
-            align-items: center;
-            /* ↑ Alinhado verticalmente */
-            gap: 5px;
-            /* ↑ Espaço entre ícone e número */
-            color: #B9BBBE;
-            /* ↑ Cor cinza claro */
-            font-size: 0.95em;
-            /* ↑ Tamanho da fonte */
-        }
-
-        .stat-online {
-        /* ↑ Indicador de membros online */
-            color: #3BA55D;
-            /* ↑ Verde (online) */
-        }
-
-        .stat-total {
-        /* ↑ Total de membros */
-            color: #B9BBBE;
-            /* ↑ Cinza */
-        }
-
-        .server-info {
-        /* ↑ Descrição do servidor */
-            color: #B9BBBE;
-            /* ↑ Texto cinza claro */
-            line-height: 1.6;
-            /* ↑ Espaçamento entre linhas */
-            margin-bottom: 20px;
-            /* ↑ Espaço abaixo */
-            min-height: 60px;
-            /* ↑ Altura mínima (deixa cards alinhados) */
-        }
-
-        .server-tags {
-        /* ↑ Tags/categorias do servidor */
-            display: flex;
-            /* ↑ Tags lado a lado */
-            flex-wrap: wrap;
-            /* ↑ Quebra linha se necessário */
-            gap: 8px;
-            /* ↑ Espaço entre tags */
-            margin-bottom: 20px;
-            /* ↑ Espaço abaixo */
-        }
-
-        .tag {
-        /* ↑ Cada tag */
-            background: #40444B;
-            /* ↑ Fundo cinza escuro */
-            color: #B9BBBE;
-            /* ↑ Texto cinza claro */
-            padding: 5px 12px;
-            /* ↑ Espaço interno */
-            border-radius: 12px;
-            /* ↑ Cantos arredondados */
-            font-size: 0.85em;
-            /* ↑ Fonte pequena */
-            font-weight: 500;
-            /* ↑ Meio negrito */
-        }
-
-        .server-actions {
-        /* ↑ Área dos botões */
-            display: flex;
-            /* ↑ Botões lado a lado */
-            gap: 10px;
-            /* ↑ Espaço entre botões */
-            flex-wrap: wrap;
-            /* ↑ Quebra linha se necessário */
-        }
-
-        .btn {
-        /* ↑ Estilo BASE de todos os botões */
-            display: inline-block;
-            /* ↑ Comporta-se como botão */
-            padding: 12px 25px;
-            /* ↑ Espaço interno */
-            border-radius: 8px;
-            /* ↑ Cantos levemente arredondados */
-            text-decoration: none;
-            /* ↑ Remove sublinhado */
-            font-weight: 600;
-            /* ↑ Negrito */
-            transition: all 0.3s ease;
-            /* ↑ Animação suave */
-            cursor: pointer;
-            /* ↑ Cursor vira mãozinha */
-            border: none;
-            /* ↑ Sem borda */
-            font-size: 0.95em;
-            /* ↑ Tamanho da fonte */
-            text-align: center;
-            /* ↑ Texto centralizado */
-        }
-
-        .btn:hover {
-        /* ↑ Quando PASSA O MOUSE no botão */
-            transform: translateY(-2px);
-            /* ↑ Sobe 2px */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            /* ↑ Adiciona sombra */
-        }
-
-        .btn-discord {
-        /* ↑ Botão azul do Discord (Entrar) */
-            background: #5865F2;
-            /* ↑ Azul Discord */
-            color: white;
-            /* ↑ Texto branco */
-            flex: 1;
-            /* ↑ Ocupa espaço disponível */
-        }
-
-        .btn-discord:hover {
-        /* ↑ Ao passar o mouse */
-            background: #4752C4;
-            /* ↑ Azul mais escuro */
-        }
-
-        .btn-copy {
-        /* ↑ Botão cinza (Copiar Link) */
-            background: #40444B;
-            /* ↑ Cinza escuro */
-            color: #B9BBBE;
-            /* ↑ Texto cinza claro */
-        }
-
-        .btn-copy:hover {
-        /* ↑ Ao passar o mouse */
-            background: #4E5258;
-            /* ↑ Cinza um pouco mais claro */
-        }
-
-        .notification {
-        /* ↑ Notificação que aparece ao copiar link */
-            position: fixed;
-            /* ↑ Fica fixo na tela */
-            top: 20px;
-            /* ↑ 20px do topo */
-            right: 20px;
-            /* ↑ 20px da direita */
-            background: #3BA55D;
-            /* ↑ Verde (sucesso) */
-            color: white;
-            /* ↑ Texto branco */
-            padding: 15px 25px;
-            /* ↑ Espaço interno */
-            border-radius: 8px;
-            /* ↑ Cantos arredondados */
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-            /* ↑ Sombra */
-            display: none;
-            /* ↑ ESCONDIDA por padrão */
-            z-index: 1000;
-            /* ↑ Aparece na frente de tudo */
-            animation: slideIn 0.3s ease;
-            /* ↑ Animação de entrada */
-            font-weight: 600;
-            /* ↑ Negrito */
-        }
-
-        .notification.show {
-        /* ↑ Quando adicionar classe "show" */
-            display: block;
-            /* ↑ Fica VISÍVEL */
-        }
-
-        @keyframes slideIn {
-        /* ↑ Animação de deslizar */
-            from {
-            /* ↑ Começo */
-                transform: translateX(400px);
-                /* ↑ 400px à direita (fora da tela) */
-                opacity: 0;
-                /* ↑ Invisível */
-            }
-            to {
-            /* ↑ Fim */
-                transform: translateX(0);
-                /* ↑ Posição normal */
-                opacity: 1;
-                /* ↑ Totalmente visível */
-            }
-        }
-
-        footer {
-        /* ↑ Rodapé do site */
-            text-align: center;
-            /* ↑ Texto centralizado */
-            color: white;
-            /* ↑ Texto branco */
-            padding: 40px 20px;
-            /* ↑ Espaçamento */
-            margin-top: 40px;
-            /* ↑ Espaço acima */
-            border-top: 1px solid rgba(255,255,255,0.1);
-            /* ↑ Linha fina em cima */
-        }
-
-        footer a {
-        /* ↑ Links no rodapé */
-            color: #5865F2;
-            /* ↑ Azul Discord */
-            text-decoration: none;
-            /* ↑ Sem sublinhado */
-            font-weight: 600;
-            /* ↑ Negrito */
-        }
-
-        footer a:hover {
-        /* ↑ Ao passar o mouse no link */
-            text-decoration: underline;
-            /* ↑ Adiciona sublinhado */
-        }
-
-        @media (max-width: 768px) {
-        /* ↑ VERSÃO MOBILE (celular) */
-        
-            header h1 {
-                font-size: 2em;
-                /* ↑ Título menor */
-            }
-
-            .servers-grid {
-                grid-template-columns: 1fr;
-                /* ↑ 1 card por linha */
-            }
-
-            .server-actions {
-                flex-direction: column;
-                /* ↑ Botões um embaixo do outro */
-            }
-
-            .btn {
-                width: 100%;
-                /* ↑ Botões largura total */
-            }
-        }
-        
-    </style>
-    <!-- ↑ FIM DOS ESTILOS -->
-    
+.copiar {
+  background: gray;
+  color: white;
+}
+</style>
 </head>
 
 <body>
-<!-- ↑ CORPO do site (conteúdo visível) -->
 
-    <div class="container">
-    <!-- ↑ Container principal -->
-    
-        <div id="notification" class="notification">
-        <!-- ↑ Notificação (escondida) -->
-            ✓ Link copiado com sucesso!
-            <!-- ↑ Texto da notificação -->
-        </div>
+<h1>servers</h1>
+<p>developed by two</p>
+<!-- 👤 PERFIS -->
+<div class="perfis">
 
-        <header>
-        <!-- ↑ CABEÇALHO -->
-            <h1>💬 Meus Servidores Discord</h1>
-            <!-- ↑ Título principal -->
-            <p>Entre nos melhores servidores da comunidade!</p>
-            <!-- ↑ Subtítulo -->
-        </header>
+  <div class="perfil">
+    <img src="https://cdn.discordapp.com/attachments/1484732985981796433/1484909134561280171/64e312ae5dc1b311dfacb8f80a59d59b.jpg?ex=69bff0e5&is=69be9f65&hm=28dd6140f942a1bcb312f3c3d03f59f24cdbee616f074a5167c5c09db5c5d71e" draggable="false">
+    <h2>Two</h2>
+  </div>
 
-        <div class="servers-grid">
-        <!-- ↑ Grade com os cards -->
-        
-            <!-- ============================================ -->
-            <!-- SERVIDOR 1 -->
-            <!-- ============================================ -->
-            <div class="server-card">
-            <!-- ↑ Card do primeiro servidor -->
-            
-                <div class="server-icon">🎮</div>
-                <!-- ↑ Ícone do servidor (emoji) -->
-                <!-- ↑ PODE TROCAR por outro emoji -->
-                
-                <h2>hazy system</h2>
-                <!-- ↑ Nome do servidor (TROQUE AQUI) -->
-                
-                <div class="server-stats">
-                <!-- ↑ Estatísticas -->
-                
-                    <div class="stat stat-online">
-                        <span>●</span>
-                        <!-- ↑ Bolinha verde -->
-                        <span>1.2K online</span>
-                        <!-- ↑ Membros online (TROQUE AQUI) -->
-                    </div>
-                    
-                    <div class="stat stat-total">
-                        <span>👥</span>
-                        <!-- ↑ Emoji de pessoas -->
-                        <span>2.3K membros</span>
-                        <!-- ↑ Total de membros (TROQUE AQUI) -->
-                    </div>
-                    
-                </div>
-                
-                <div class="server-info">
-                <!-- ↑ Descrição -->
-                    Comunidade focada em discord, eventos semanais, torneios e muito mais! Venha jogar com a gente!
-                    <!-- ↑ Descrição do servidor (TROQUE AQUI) -->
-                </div>
-                
-                <div class="server-tags">
-                <!-- ↑ Tags/categorias -->
-                    <span class="tag">Gaming</span>
-                    <!-- ↑ TROQUE as tags pelo seu servidor -->
-                    <span class="tag">Comunidade</span>
-                    <span class="tag">Torneios</span>
-                </div>
-                
-                <div class="server-actions">
-                <!-- ↑ Botões -->
-                
-                    <a href="https://discord.gg/SwZ2RsK4fb" class="btn btn-discord" target="_blank">
-                    <!-- ↑ Botão azul para entrar -->
-                    <!-- ↑ TROQUE pelo link do SEU servidor -->
-                    <!-- ↑ target="_blank" = abre em nova aba -->
-                        Entrar no Servidor
-                    </a>
-                    
-                    <button class="btn btn-copy" onclick="copiarLink('https://discord.gg/SwZ2RsK4fb')">
-                    <!-- ↑ Botão para copiar link -->
-                    <!-- ↑ TROQUE pelo link do SEU servidor -->
-                        📋 Copiar Link
-                    </button>
-                    
-                </div>
-            </div>
-            <!-- ↑ FIM DO CARD 1 -->
+  <div class="perfil">
+    <img src="https://cdn.discordapp.com/avatars/1374911691984470109/e118a2ebea4e4a554677abaff5e37b6d.png?size=2048" draggable="false">
+    <h2>luke | founder at moons darks</h2>
+  </div>
 
-            <!-- ============================================ -->
-            <!-- SERVIDOR 2 -->
-            <!-- ============================================ -->
+</div>
 
-            <!-- ↑ FIM DO CARD 1 -->
+<div class="perfil">
+    <img src="https://cdn.discordapp.com/attachments/1485046681769607339/1485048269955534899/image.png?ex=69c0727a&is=69bf20fa&hm=86adb2da5c26a962f892855ef94c9199c5343d4c9b4116dceb6e0812b64b95ca" draggable="false">
+    <h2>Orchidx secondary profile</h2>
+  </div>
 
-            <!-- ============================================ -->
-            <!-- SERVIDOR 3 -->
-            <!-- ============================================ -->
-            <div class="server-card">
-            
-                <div class="server-icon">💻</div>
-                <!-- ↑ Ícone de programação -->
-                
-                <h2>maçã hub</h2>
-                <!-- ↑ Nome (TROQUE) -->
-                
-                <div class="server-stats">
-                    <div class="stat stat-online">
-                        <span>●</span>
-                        <span>10 online</span>
-                        <!-- ↑ TROQUE -->
-                    </div>
-                    <div class="stat stat-total">
-                        <span>👥</span>
-                        <span>20 membros</span>
-                        <!-- ↑ TROQUE -->
-                    </div>
-                </div>
-                
-                <div class="server-info">
-                    Comunidade brasileira de script Tire dúvidas, compartilhe projetos e aprenda com outros devs.
-                    <!-- ↑ TROQUE -->
-                </div>
-                
-                <div class="server-tags">
-                    <span class="tag">Programação</span>
-                    <!-- ↑ TROQUE -->
-                    <span class="tag">Tech</span>
-                    <span class="tag">Aprendizado</span>
-                </div>
-                
-                <div class="server-actions">
-                    <a href="https://discord.gg/2rd5fjQTC2" class="btn btn-discord" target="_blank">
-                    <!-- ↑ TROQUE -->
-                        Entrar no Servidor
-                    </a>
-                    <button class="btn btn-copy" onclick="copiarLink('https://discord.gg/2rd5fjQTC2')">
-                    <!-- ↑ TROQUE -->
-                        📋 Copiar Link
-                    </button>
-                </div>
-            </div>
-            <!-- ↑ FIM DO CARD 3 -->
-            
-        </div>
-        <!-- ↑ FIM DA GRADE -->
+<!-- 📦 SERVIDOR -->
+<div class="servidor">
+  <h3>moons darks</h3>
 
-        <footer>
-        <!-- ↑ RODAPÉ -->
-            <p>© 2024 Meus Servidores Discord</p>
-            <p>
-                Feito com 💜 | 
-                <a href="https://discord.com" target="_blank">Discord</a>
-                <!-- ↑ TROQUE pelos seus links -->
-            </p>
-        </footer>
-        
-    </div>
-    <!-- ↑ FIM DO CONTAINER -->
+  <button class="entrar" onclick="window.open('https://discord.gg/Dj7sF7Twk4')">
+    Entrar
+  </button>
 
-    <script>
-    <!-- ↑ JAVASCRIPT (funções) -->
-    
-        function copiarLink(link) {
-        /* ↑ FUNÇÃO que copia o link do convite */
-        
-            const tempInput = document.createElement('input');
-            /* ↑ Cria campo invisível */
-            
-            tempInput.value = link;
-            /* ↑ Coloca o link dentro */
-            
-            document.body.appendChild(tempInput);
-            /* ↑ Adiciona na página */
-            
-            tempInput.select();
-            /* ↑ Seleciona o texto */
-            
-            document.execCommand('copy');
-            /* ↑ COPIA */
-            
-            document.body.removeChild(tempInput);
-            /* ↑ Remove o campo */
-            
-            mostrarNotificacao('✓ Link copiado com sucesso!');
-            /* ↑ Mostra notificação verde */
-        }
+  <button class="copiar" onclick="copiarLink('https://discord.gg/Dj7sF7Twk4')">
+  Copiar
+</button>
+</div>
 
-        function mostrarNotificacao(mensagem) {
-        /* ↑ FUNÇÃO que mostra a notificação */
-        
-            const notification = document.getElementById('notification');
-            /* ↑ Encontra a notificação */
-            
-            notification.textContent = mensagem;
-            /* ↑ Troca o texto */
-            
-            notification.classList.add('show');
-            /* ↑ Adiciona classe "show" (aparece) */
-            
-            setTimeout(() => {
-            /* ↑ Espera 3 segundos */
-            
-                notification.classList.remove('show');
-                /* ↑ Remove classe "show" (desaparece) */
-                
-            }, 3000);
-            /* ↑ 3000 = 3 segundos */
-        }
-        
-    </script>
-    <!-- ↑ FIM DO JAVASCRIPT -->
-    
+<div class="servidor">
+  <img src="https://cdn.discordapp.com/attachments/1485046681769607339/1485050274086125749/image.png?ex=69c07458&is=69bf22d8&hm=ed229372dfe5c30a1e198b960590692cc06561153abb035c7b1991a51218be15" draggable="false">
+  <h3>Servidor 1</h3>
+
+  <button class="entrar" onclick="window.open('https://discord.gg/link1')">
+    Entrar
+  </button>
+
+  <button class="copiar" onclick="copiarLink('https://discord.gg/link1')">
+    Copiar
+  </button>
+</div>
+
+<p>feito com amor no brasil💜</p>
+
+<!-- 🔒 PROTEÇÃO -->
+<script>
+// bloqueia clique direito
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// bloqueia arrastar
+document.addEventListener("dragstart", e => e.preventDefault());
+
+// função copiar
+function copiarLink() {
+  navigator.clipboard.writeText("https://discord.gg/seulink");
+  alert("Link copiado!");
+}
+</script>
+
 </body>
 </html>
-<!-- ↑ FIM DO ARQUIVO -->
